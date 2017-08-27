@@ -1,17 +1,19 @@
 .post-list {
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .post {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 400px 400px;
+    grid-template-columns: 50% 50%;
     grid-template-areas: 
     "title author"
     "score category";
     padding-bottom: 10px;
     border-bottom: 1px dotted grey;
-    margin-bottom: 10px;
+    margin: 5px 0;
 }
 
 .post__title {

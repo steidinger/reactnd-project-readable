@@ -1,11 +1,14 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import './Categories.css';
 
-const CategoriesMenu = ({categories}) => (
-<ul>
-    {categories.map(({name,path}) => <li key={path}>{name}</li>)}
-</ul>);
+const CategoriesMenu = ({ categories }) => (
+    <ul className='category-list'>
+        {categories.map(({ name, path }) => (
+            <li key={path} className='category'>{name}</li>
+        ))}
+    </ul>);
 
-const mapStateToProps = ({categories}) => ({categories});
+const mapStateToProps = ({ categories }) => ({ categories });
 
 export default connect(mapStateToProps)(CategoriesMenu);

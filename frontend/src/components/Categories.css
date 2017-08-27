@@ -1,0 +1,18 @@
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background: #aaa;
+}
+
+.category {
+    display: block;
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 1px;
+    background: #eee;
+}
+
