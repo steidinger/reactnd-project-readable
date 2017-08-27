@@ -1,0 +1,31 @@
+.post-list {
+    list-style: none;
+}
+
+.post {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 400px 400px;
+    grid-template-areas: 
+    "title author"
+    "score category";
+    padding-bottom: 10px;
+    border-bottom: 1px dotted grey;
+    margin-bottom: 10px;
+}
+
+.post__title {
+    grid-area: title;
+}
+
+.post__author {
+    grid-area: author;
+}
+
+.post__vote-score {
+    grid-area: score
+}
+
+.posts__category {
+    grid-area: category;
+}
