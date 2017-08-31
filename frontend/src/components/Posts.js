@@ -7,13 +7,13 @@ import './Posts.css';
 const Posts = ({ posts }) => (
     <ol className='post-list'>
         {posts.map(({ id, title, category, timestamp, author, voteScore }) => (
-            <li key={id} className='post'>
-                <span className='post__title'>
+            <li key={id} className='post-list__post'>
+                <span className='post-list__post-title'>
                     <Link to={`/${category}/${id}`}>{title}</Link>
                 </span>
-                <span className='post__author'>{author}</span>
-                <span className='post__vote-score'>{voteScore}</span>
-                <span className='post__category'>{category}</span>
+                <span className='post-list__author'>{author}</span>
+                <span className='post-list__vote-score'>{voteScore}</span>
+                <span className='post-list__category'>{category}</span>
             </li>
         ))}
     </ol>

@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {CATEGORIES_RECEIVED, POSTS_RECEIVED, SORT_POSTS} from './actions';
+import {CATEGORIES_RECEIVED, COMMENTS_RECEIVED, POSTS_RECEIVED, SORT_POSTS} from './actions';
 
 export function categories(state = [], action) {
     switch (action.type) {
@@ -22,6 +22,19 @@ export function posts(state = {}, action) {
     }
 }
 
+export function comments(state = {}, action) {
+    switch (action.type) {
+        case COMMENTS_RECEIVED:
+            const received = action.comments.reduce((collector, c) => {
+                collector[c.id] = c;
+                return collector;
+            }, {});
+            return Object.assign({}, state, received);
+        default:
+            return state;
+    }
+}
+
 export function postsApp(state = {sortField: 'voteScore', sortAscending: false}, action) {
     switch (action.type) {
         case SORT_POSTS:
@@ -37,6 +50,7 @@ export function postsApp(state = {sortField: 'voteScore', sortAscending: false},
 
 export default combineReducers({
     categories, 
+    comments,
     posts,
     postsApp
 });
