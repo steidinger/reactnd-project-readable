@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import moment from 'moment';
 import { visiblePosts } from '../selectors';
 import './Posts.css';
 
@@ -21,6 +22,7 @@ const Posts = ({ posts }) => (
                 </span>
                 <span className="post-list__category">{category}</span>
                 <span className="post-list__comments-count">{comments.length}</span>
+                <span className="post-list__date">{moment(timestamp).fromNow()}</span>
             </li>
         ))}
     </ol>
