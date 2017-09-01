@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import { visiblePosts } from '../selectors';
 import { addVote } from '../actions';
+import VoteControl from './VoteControl';
 
 import './Posts.css';
 
@@ -23,8 +24,7 @@ const Posts = ({ posts, onVote = nop}) => (
                     'post-list__vote-score--negative': voteScore < 0 
                     })}>
                     {voteScore}
-                    <button className="upvote" onClick={() => onVote(id, +1)}>Upvote</button>
-                    <button className="downvote" onClick={() => onVote(id, -1)}>Downvote</button>
+                    <VoteControl onVote={vote => onVote(id, vote)}/>
                 </span>
                 <span className="post-list__category">{category}</span>
                 <span className="post-list__comments-count">{comments.length}</span>

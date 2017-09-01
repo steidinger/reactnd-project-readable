@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchComments } from '../actions';
+import { addVote, fetchComments } from '../actions';
 import { visibleComments } from '../selectors';
+import VoteControl from './VoteControl';
 
 class PostDetailsView extends React.Component {
 
@@ -25,6 +26,7 @@ class PostDetailsView extends React.Component {
 
         const {
             post: {
+                id,
                 title,
                 body,
                 author,
@@ -32,7 +34,8 @@ class PostDetailsView extends React.Component {
                 voteScore,
                 timestamp
             },
-            comments
+            comments,
+            onVote
         } = this.props;
 
         const hasComments = comments.length > 0;
@@ -43,7 +46,9 @@ class PostDetailsView extends React.Component {
                 <p className="post__body">{body}</p>
                 <div className="post__author">{author}</div>
                 <div className="post__category">{category}</div>
-                <div className="voteScore">{voteScore}</div>
+                <div className="voteScore">{voteScore}
+                    <VoteControl onVote={vote => onVote(id, vote)}/>
+                </div>
                 <h2>Comments</h2>
                 {hasComments && comments.map(comment => (
                     <div className="comment" key={comment.id}>{comment.body}</div>
@@ -60,4 +65,9 @@ const mapStateToProps = (state, { match }) => {
     return { post, comments };
 }
 
-export default connect(mapStateToProps)(PostDetailsView);
+const mapDispatchToProps = (dispatch) => ({
+    onVote: (post_id, vote) => dispatch(addVote(post_id, vote)),
+    dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetailsView);
