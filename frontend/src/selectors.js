@@ -8,9 +8,16 @@ function byField(sortField, ascending = true) {
     }
 }
 
-export const postById = ({posts}, id) => posts[id];
+export const postById = ({ posts, comments }, id) =>
+    Object.assign({}, posts[id], { comments: visibleComments({ comments }, { id }) });
 
-export const visibleComments = ({comments}, {id}) => Object.values(comments).filter(c => c.parentId === id).sort(byField('timestamp', false));
+export const visibleComments = ({ comments }, { id }) =>
+    Object.values(comments).filter(c => c.parentId === id).sort(byField('timestamp', false));
 
-export const visiblePosts = ({ posts, postsApp }) =>
-    Object.values(posts).sort(byField(postsApp.sortField, postsApp.sortAscending));
+export const numberOfCommentsForPost = ({ comments }, { id }) =>
+    visibleComments({ comments }, { id }).length;
+
+export const visiblePosts = ({ posts, comments, postsApp }) =>
+    Object.keys(posts)
+        .map(id => postById({ posts, comments }, id))
+        .sort(byField(postsApp.sortField, postsApp.sortAscending));

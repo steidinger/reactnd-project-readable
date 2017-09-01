@@ -31,3 +31,11 @@
 .post-list__category {
     grid-area: category;
 }
+
+.post-list__vote-score--positive {
+    color: green;
+}
+
+.post-list__vote-score--negative {
+    color: darkred;
+}

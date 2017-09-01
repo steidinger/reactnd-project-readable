@@ -27,15 +27,18 @@ export function fetchPosts() {
     return (dispatch) => {
         fetchWithAuthorization('posts')
             .then(response => response.json())
-            .then(posts => dispatch(postsReceived(posts)));
+            .then(posts => {
+                dispatch(postsReceived(posts));
+                // need to fetch comments for each post so that number of comments can be displayed
+                // to bad that there is no api to get all comments with one request
+                posts.forEach(post => dispatch(fetchComments(post)));
+            });
     }
 }
 
 export function fetchComments(post) {
-    console.log("fetchComments", post);
     return (dispatch) => {
         const path = `posts/${post.id}/comments`;
-        console.log("Fetch ", path);
         fetchWithAuthorization(path)
             .then(response => response.json())
             .then(comments => dispatch(commentsReceived(comments)));
