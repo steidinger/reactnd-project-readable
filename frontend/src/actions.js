@@ -2,10 +2,13 @@ export const CATEGORIES_RECEIVED = 'CATEGORIES_RECEIVED';
 export const COMMENTS_RECEIVED = 'COMMENTS_RECEIVED';
 export const POSTS_RECEIVED = 'POSTS_RECEIVED';
 export const SORT_POSTS = 'SORT_POSTS';
+export const ADD_VOTE = 'ADD_VOTE';
 
 const categoriesReceived = categories => ({ type: CATEGORIES_RECEIVED, categories });
 const postsReceived = posts => ({ type: POSTS_RECEIVED, posts });
 const commentsReceived = comments => ({ type: COMMENTS_RECEIVED, comments });
+
+export const addVote = (post_id, vote) => ({ type: ADD_VOTE, post_id, vote });
 
 function fetchWithAuthorization(path) {
     return fetch(`http://localhost:5001/${path}`, {

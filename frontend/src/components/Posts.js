@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import moment from 'moment';
 import { visiblePosts } from '../selectors';
+import { addVote } from '../actions';
+
 import './Posts.css';
 
-const Posts = ({ posts }) => (
+const nop = () => undefined;
+
+const Posts = ({ posts, onVote = nop}) => (
     <ol className="post-list">
         {posts.map(({ id, title, category, timestamp, author, voteScore, comments }) => (
             <li key={id} className="post-list__post">
@@ -19,6 +23,8 @@ const Posts = ({ posts }) => (
                     'post-list__vote-score--negative': voteScore < 0 
                     })}>
                     {voteScore}
+                    <button className="upvote" onClick={() => onVote(id, +1)}>Upvote</button>
+                    <button className="downvote" onClick={() => onVote(id, -1)}>Downvote</button>
                 </span>
                 <span className="post-list__category">{category}</span>
                 <span className="post-list__comments-count">{comments.length}</span>
@@ -30,4 +36,8 @@ const Posts = ({ posts }) => (
 
 const mapStateToProps = (state) => ({ posts: visiblePosts(state) });
 
-export default connect(mapStateToProps)(Posts);
+const mapDispatchToProps = (dispatch) => ({
+    onVote: (id, vote) => dispatch(addVote(id, vote))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

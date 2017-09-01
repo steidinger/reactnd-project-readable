@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {CATEGORIES_RECEIVED, COMMENTS_RECEIVED, POSTS_RECEIVED, SORT_POSTS} from './actions';
+import {ADD_VOTE, CATEGORIES_RECEIVED, COMMENTS_RECEIVED, POSTS_RECEIVED, SORT_POSTS} from './actions';
 
 export function categories(state = [], action) {
     switch (action.type) {
@@ -17,6 +17,13 @@ export function posts(state = {}, action) {
                 collector[p.id] = p;
                 return collector;
             }, {});
+        case ADD_VOTE: 
+            const originalPost = state[action.post_id];
+            if (originalPost) {
+                const updatedPost = Object.assign({}, originalPost, {voteScore: originalPost.voteScore += action.vote});
+                return Object.assign({}, state, {[action.post_id]: updatedPost});
+            }
+            return state;
         default:
             return state;
     }
