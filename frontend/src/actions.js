@@ -19,13 +19,13 @@ export const voteAdded = (post_id, vote) => ({ type: ADD_VOTE, post_id, vote });
 export const editPost = post => ({ type: EDIT_POST, post });
 export const editPostFinished = () => ({ type: EDIT_POST_FINISHED });
 
-function fetchWithAuthorization(path, options = {}) {
+function doGet(path, options = {}) {
     options.headers = Object.assign({}, options.headers, {Authorization: 'faked'});
     return fetch(`http://localhost:5001/${path}`, options);
 }
 
 function doPost(path, body) {
-    return fetchWithAuthorization(path, {
+    return doGet(path, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -33,7 +33,7 @@ function doPost(path, body) {
 }
 
 function doPut(path, body) {
-    return fetchWithAuthorization(path, {
+    return doGet(path, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -42,7 +42,7 @@ function doPut(path, body) {
 
 export function fetchCategories() {
     return (dispatch) => {
-        fetchWithAuthorization('categories')
+        doGet('categories')
             .then(response => response.json())
             .then(json => dispatch(categoriesReceived(json.categories)));
     }
@@ -50,7 +50,7 @@ export function fetchCategories() {
 
 export function fetchPosts() {
     return (dispatch) => {
-        fetchWithAuthorization('posts')
+        doGet('posts')
             .then(response => response.json())
             .then(posts => {
                 dispatch(postsReceived(posts));
@@ -64,7 +64,7 @@ export function fetchPosts() {
 export function fetchComments(post) {
     return (dispatch) => {
         const path = `posts/${post.id}/comments`;
-        fetchWithAuthorization(path)
+        doGet(path)
             .then(response => response.json())
             .then(comments => dispatch(commentsReceived(comments)));
     }
