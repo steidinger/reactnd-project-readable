@@ -91,7 +91,7 @@ export function addPost(post) {
         dispatch(postUpdated(post));
         doPost('posts', post)
         .then(response => response.json())
-        .then(json => console.log('Saved', json))
+        .then(json => dispatch(postUpdated(json)))
         .catch(e => {
             console.error(e);
             dispatch(fetchPosts());
@@ -104,7 +104,7 @@ export function savePost(post) {
         dispatch(postUpdated(post));
         doPut(`posts/${post.id}`, {title: post.title, body: post.body })
         .then(response => response.json())
-        .then(json => console.log('Updated', json))
+        .then(json => dispatch(postUpdated(json)))
         .catch(e => {
             console.error(e);
             dispatch(fetchPosts());

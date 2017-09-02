@@ -19,7 +19,7 @@ class PostEditView extends React.Component {
     }
 
     render() {
-        const { post, categories, onSave } = this.props;
+        const { post, categories, onSave, onCancel } = this.props;
         const isNewPost = !post.id;
 
         return (
@@ -52,21 +52,23 @@ class PostEditView extends React.Component {
                             }
                         </select>}
                 </div>
-                <button type="button" onClick={(e) => onSave(post)}>Save</button>
+                <button type="button" onClick={() => onSave(post)}>Save</button>
+                <button type="button" onClick={() => onCancel(post)}>Cancel</button>
             </form>
         )
     };
 }
 
-const mapStateToProps = (state, { match }) => {
+const mapStateToProps = (state, { match, history }) => {
     const post = state.postsApp.currentlyEditedPost || state.posts[match.params.post_id] || { category: undefined };
-    return { post, categories: state.categories };
+    return { post, categories: state.categories, history };
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, { history }) => ({
     onEdit: (post) => dispatch(editPost(post)),
     onExit: () => dispatch(editPostFinished()),
-    onSave: (post) => dispatch(post.id ? savePost(post) : addPost(post))
+    onSave: (post) => { history.push('/'); dispatch(post.id ? savePost(post) : addPost(post)) },
+    onCancel: (post) => history.push(post && post.id ? `/${post.category}/${post.id}` : '/')
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostEditView);
