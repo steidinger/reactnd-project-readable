@@ -48,13 +48,15 @@ export function fetchComments(post) {
 
 export function addVote(post_id, vote) {
     return (dispatch) => {
+        // optimistic update: reflect new state immediately
+        dispatch(voteAdded(post_id, vote));
         fetchWithAuthorization(`posts/${post_id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({option: vote > 0 ? 'upVote' : 'downVote'})
         })
         .then(response => response.json())
-        .then(post =>dispatch(postUpdated(post)))
+        .then(post => dispatch(postUpdated(post)))
         .catch(e => {
             console.error(e);
             dispatch(fetchPosts());

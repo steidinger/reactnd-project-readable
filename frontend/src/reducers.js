@@ -25,12 +25,15 @@ export function posts(state = {}, action) {
                 return collector;
             }, {});
         case POST_UPDATED:
-            return Object.assign({}, state, {[action.post.id]: action.post});
+            return {...state, [action.post.id]: action.post};
         case ADD_VOTE:
             const originalPost = state[action.post_id];
             if (originalPost) {
-                const updatedPost = Object.assign({}, originalPost, { voteScore: originalPost.voteScore += action.vote });
-                return Object.assign({}, state, { [action.post_id]: updatedPost });
+                const updatedPost = {
+                    ...originalPost, 
+                    voteScore: originalPost.voteScore += action.vote 
+                };
+                return {...state, [action.post_id]: updatedPost };
             }
             return state;
         default:
@@ -45,7 +48,7 @@ export function comments(state = {}, action) {
                 collector[c.id] = c;
                 return collector;
             }, {});
-            return Object.assign({}, state, received);
+            return {...state, ...received};
         default:
             return state;
     }
