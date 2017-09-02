@@ -30,6 +30,9 @@ const Posts = ({ posts, onVote = nop}) => (
                 <span className="post-list__category">{category}</span>
                 <span className="post-list__comments-count">{comments.length}</span>
                 <span className="post-list__date">{moment(timestamp).fromNow()}</span>
+                <span className="post-list__actions">
+                    <Link to={`/${category}/${id}/edit`}>Edit</Link>
+                </span>
             </li>
         ))}
     </ol>

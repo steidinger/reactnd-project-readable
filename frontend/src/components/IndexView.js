@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import CategoriesMenu from './CategoriesMenu';
 import Posts from './Posts';
 import SortOrderSelector from './SortOrderSelector';
@@ -9,6 +10,7 @@ const IndexView = ({activeCategory}) => (
     <CategoriesMenu />
     <SortOrderSelector />
     <Posts activeCategory={activeCategory} />
+    <Link className="button" to="/post/add">Add New Post</Link>
   </div>
 );
 

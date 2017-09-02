@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import IndexView from './components/IndexView';
 import PostDetailsView from './components/PostDetailsView';
-
+import PostEditView from './components/PostEditView';
 import './App.css';
 
 class App extends Component {
@@ -14,9 +14,11 @@ class App extends Component {
           <Link to="/">Home</Link>
         </div>
         <Switch>
-          <Route path='/' exact component={IndexView} />
-          <Route path='/:category' exact component={IndexView} />
-          <Route path='/:category/:post_id' component={PostDetailsView} />
+          <Route path="/" exact component={IndexView} />
+          <Route path="/post/add" component={PostEditView} />
+          <Route path="/:category" exact component={IndexView} />
+          <Route path="/:category/:post_id/edit" component={PostEditView} />
+          <Route path="/:category/:post_id" component={PostDetailsView} />
         </Switch>
       </div>
     );
