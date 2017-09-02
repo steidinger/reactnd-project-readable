@@ -1,11 +1,13 @@
 export const CATEGORIES_RECEIVED = 'CATEGORIES_RECEIVED';
 export const COMMENTS_RECEIVED = 'COMMENTS_RECEIVED';
 export const POSTS_RECEIVED = 'POSTS_RECEIVED';
+export const POST_UPDATED = 'POST_UPDATED';
 export const SORT_POSTS = 'SORT_POSTS';
 export const ADD_VOTE = 'ADD_VOTE';
 
 const categoriesReceived = categories => ({ type: CATEGORIES_RECEIVED, categories });
 const postsReceived = posts => ({ type: POSTS_RECEIVED, posts });
+const postUpdated = post => ({ type: POST_UPDATED, post });
 const commentsReceived = comments => ({ type: COMMENTS_RECEIVED, comments });
 export const voteAdded = (post_id, vote) => ({ type: ADD_VOTE, post_id, vote });
 
@@ -51,10 +53,8 @@ export function addVote(post_id, vote) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({option: vote > 0 ? 'upVote' : 'downVote'})
         })
-        .then(response => {
-            console.log(response);
-            dispatch(voteAdded(post_id, vote));
-        })
+        .then(response => response.json())
+        .then(post =>dispatch(postUpdated(post)))
         .catch(e => {
             console.error(e);
             dispatch(fetchPosts());

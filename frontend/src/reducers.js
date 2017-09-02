@@ -1,5 +1,12 @@
-import {combineReducers} from 'redux';
-import {ADD_VOTE, CATEGORIES_RECEIVED, COMMENTS_RECEIVED, POSTS_RECEIVED, SORT_POSTS} from './actions';
+import { combineReducers } from 'redux';
+import {
+    ADD_VOTE,
+    CATEGORIES_RECEIVED,
+    COMMENTS_RECEIVED,
+    POSTS_RECEIVED,
+    POST_UPDATED,
+    SORT_POSTS
+} from './actions';
 
 export function categories(state = [], action) {
     switch (action.type) {
@@ -17,11 +24,13 @@ export function posts(state = {}, action) {
                 collector[p.id] = p;
                 return collector;
             }, {});
-        case ADD_VOTE: 
+        case POST_UPDATED:
+            return Object.assign({}, state, {[action.post.id]: action.post});
+        case ADD_VOTE:
             const originalPost = state[action.post_id];
             if (originalPost) {
-                const updatedPost = Object.assign({}, originalPost, {voteScore: originalPost.voteScore += action.vote});
-                return Object.assign({}, state, {[action.post_id]: updatedPost});
+                const updatedPost = Object.assign({}, originalPost, { voteScore: originalPost.voteScore += action.vote });
+                return Object.assign({}, state, { [action.post_id]: updatedPost });
             }
             return state;
         default:
@@ -42,12 +51,12 @@ export function comments(state = {}, action) {
     }
 }
 
-export function postsApp(state = {sortField: 'voteScore', sortAscending: false}, action) {
+export function postsApp(state = { sortField: 'voteScore', sortAscending: false }, action) {
     switch (action.type) {
         case SORT_POSTS:
-            return { 
+            return {
                 ...state,
-                sortField: action.sortField, 
+                sortField: action.sortField,
                 sortAscending: action.ascending
             };
         default:
@@ -56,7 +65,7 @@ export function postsApp(state = {sortField: 'voteScore', sortAscending: false},
 }
 
 export default combineReducers({
-    categories, 
+    categories,
     comments,
     posts,
     postsApp
