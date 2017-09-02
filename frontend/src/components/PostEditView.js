@@ -59,9 +59,10 @@ class PostEditView extends React.Component {
     };
 }
 
-const mapStateToProps = (state, { match, history }) => {
-    const post = state.postsApp.currentlyEditedPost || state.posts[match.params.post_id] || { category: undefined };
-    return { post, categories: state.categories, history };
+const mapStateToProps = (state, { match, location }) => {
+    const defaultCategory = (/category=(\w+)/.exec(location.search) || [])[1];;
+    const post = state.postsApp.currentlyEditedPost || state.posts[match.params.post_id] || { category: defaultCategory };
+    return { post, categories: state.categories };
 }
 
 const mapDispatchToProps = (dispatch, { history }) => ({
