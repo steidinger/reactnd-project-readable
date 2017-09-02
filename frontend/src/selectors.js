@@ -17,7 +17,8 @@ export const visibleComments = ({ comments }, { id }) =>
 export const numberOfCommentsForPost = ({ comments }, { id }) =>
     visibleComments({ comments }, { id }).length;
 
-export const visiblePosts = ({ posts, comments, postsApp }) =>
+export const visiblePosts = ({ posts, comments, postsApp }, filterCategory) =>
     Object.keys(posts)
         .map(id => postById({ posts, comments }, id))
+        .filter(post => !filterCategory || post.category === filterCategory)
         .sort(byField(postsApp.sortField, postsApp.sortAscending));

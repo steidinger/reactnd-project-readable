@@ -11,6 +11,7 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route path='/' exact component={IndexView} />
+          <Route path='/:category' exact component={IndexView} />
           <Route path='/:category/:post_id' component={PostDetailsView} />
         </Switch>
       </div>

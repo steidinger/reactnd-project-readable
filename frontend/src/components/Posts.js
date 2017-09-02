@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -34,10 +35,10 @@ const Posts = ({ posts, onVote = nop}) => (
     </ol>
 );
 
-const mapStateToProps = (state) => ({ posts: visiblePosts(state) });
+const mapStateToProps = (state, { activeCategory }) => ({ posts: visiblePosts(state, activeCategory)});
 
 const mapDispatchToProps = (dispatch) => ({
     onVote: (id, vote) => dispatch(addVote(id, vote))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Posts);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts));

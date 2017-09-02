@@ -1,15 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import CategoriesMenu from './CategoriesMenu';
 import Posts from './Posts';
 import SortOrderSelector from './SortOrderSelector';
 
-const IndexView = () => (
-    <div>
+const IndexView = ({activeCategory}) => (
+  <div>
     <CategoriesMenu />
     <SortOrderSelector />
-    <Posts />
+    <Posts activeCategory={activeCategory} />
   </div>
 );
 
-export default IndexView;
+const mapStateToProps = (state, { match }) => ({
+  activeCategory: match.params.category ? match.params.category : undefined
+});
+
+export default connect(mapStateToProps)(IndexView);
 
