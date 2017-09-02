@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { addVote, fetchComments } from '../actions';
+import { addVote, deletePost, fetchComments } from '../actions';
 import { visibleComments } from '../selectors';
 import VoteControl from './VoteControl';
 
@@ -37,7 +38,8 @@ class PostDetailsView extends React.Component {
                 timestamp
             },
             comments,
-            onVote
+            onVote,
+            onDelete
         } = this.props;
 
         const hasComments = comments.length > 0;
@@ -52,7 +54,10 @@ class PostDetailsView extends React.Component {
                 <div className="voteScore">{voteScore}
                     <VoteControl onVote={vote => onVote(id, vote)}/>
                 </div>
-                <Link to={`/${category}/${id}/edit`}>Edit Post</Link>
+                <div className="post__actions">
+                    <Link to={`/${category}/${id}/edit`}>Edit Post</Link>
+                    <button type="button" onClick={() => onDelete(id)}>Delete</button>
+                </div>
                 <h2>Comments</h2>
                 {hasComments && comments.map(comment => (
                     <div className="comment" key={comment.id}>{comment.body}</div>
@@ -63,15 +68,19 @@ class PostDetailsView extends React.Component {
     };
 }
 
-const mapStateToProps = (state, { match }) => {
+const mapStateToProps = (state, { match}) => {
     const post = state.posts[match.params.post_id];
     const comments = post ? visibleComments(state, post) : [];
-    return { post, comments };
+    return { post, comments};
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, { history }) => ({
     onVote: (post_id, vote) => dispatch(addVote(post_id, vote)),
-    dispatch
+    onDelete: (id) => { 
+        dispatch(deletePost(id)); 
+        history.push('/'); 
+    }, 
+    dispatch 
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetailsView);

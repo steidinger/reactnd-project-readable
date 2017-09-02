@@ -5,14 +5,12 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import moment from 'moment';
 import { visiblePosts } from '../selectors';
-import { addVote } from '../actions';
+import { addVote, deletePost } from '../actions';
 import VoteControl from './VoteControl';
 
 import './Posts.css';
 
-const nop = () => undefined;
-
-const Posts = ({ posts, onVote = nop}) => (
+const Posts = ({ posts, onVote, onDelete}) => (
     <ol className="post-list">
         {posts.map(({ id, title, category, timestamp, author, voteScore, comments }) => (
             <li key={id} className="post-list__post">
@@ -32,6 +30,7 @@ const Posts = ({ posts, onVote = nop}) => (
                 <span className="post-list__date">{moment(timestamp).fromNow()}</span>
                 <span className="post-list__actions">
                     <Link to={`/${category}/${id}/edit`}>Edit</Link>
+                    <button type="button" onClick={() => onDelete(id)}>Delete</button>
                 </span>
             </li>
         ))}
@@ -41,7 +40,8 @@ const Posts = ({ posts, onVote = nop}) => (
 const mapStateToProps = (state, { activeCategory }) => ({ posts: visiblePosts(state, activeCategory)});
 
 const mapDispatchToProps = (dispatch) => ({
-    onVote: (id, vote) => dispatch(addVote(id, vote))
+    onVote: (id, vote) => dispatch(addVote(id, vote)),
+    onDelete: (id) => dispatch(deletePost(id))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts));

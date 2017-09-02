@@ -44,7 +44,11 @@ class PostEditView extends React.Component {
                 <div className="form-row">
                     <label htmlFor="post_category">Category</label>
                     {categories &&
-                        <select id="post_category" value={post.category} onChange={(e) => this.handleChange('category', e.target.value)} disabled={!isNewPost}>
+                        <select id="post_category" 
+                            value={post.category} 
+                            onChange={(e) => this.handleChange('category', e.target.value)} disabled={!isNewPost}
+                        >
+                        <option>-- Select category</option>
                             {categories.map(category => (
                                 <option key={category.path} value={category.name}>
                                     {category.name}

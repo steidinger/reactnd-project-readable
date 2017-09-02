@@ -7,6 +7,7 @@ export const POST_UPDATED = 'POST_UPDATED';
 export const SORT_POSTS = 'SORT_POSTS';
 export const EDIT_POST = 'EDIT_POST';
 export const POST_ADDED = 'POST_ADDED';
+export const POST_DELETED = 'POST_DELETED';
 export const POST_SAVED = 'POST_SAVED';
 export const EDIT_POST_FINISHED = 'EDIT_POST_FINISHED';
 export const ADD_VOTE = 'ADD_VOTE';
@@ -14,28 +15,43 @@ export const ADD_VOTE = 'ADD_VOTE';
 const categoriesReceived = categories => ({ type: CATEGORIES_RECEIVED, categories });
 const postsReceived = posts => ({ type: POSTS_RECEIVED, posts });
 const postUpdated = post => ({ type: POST_UPDATED, post });
+const postDeleted = id => ({ type: POST_DELETED, id });
 const commentsReceived = comments => ({ type: COMMENTS_RECEIVED, comments });
 export const voteAdded = (post_id, vote) => ({ type: ADD_VOTE, post_id, vote });
 export const editPost = post => ({ type: EDIT_POST, post });
 export const editPostFinished = () => ({ type: EDIT_POST_FINISHED });
 
-function doGet(path, options = {}) {
-    options.headers = Object.assign({}, options.headers, {Authorization: 'faked'});
-    return fetch(`http://localhost:5001/${path}`, options);
+function doGet(path) {
+    return fetch(`http://localhost:5001/${path}`, {
+        headers: {Authorization: 'faked'}
+    });
+}
+
+function doDelete(path) {
+    return fetch(`http://localhost:5001/${path}`, {
+        method: 'DELETE',
+        headers: {Authorization: 'faked'}
+    });
 }
 
 function doPost(path, body) {
-    return doGet(path, {
+    return fetch(`http://localhost:5001/${path}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json', 
+            Authorization: 'faked' 
+        },
         body: JSON.stringify(body)
     });
 }
 
 function doPut(path, body) {
-    return doGet(path, {
+    return fetch(`http://localhost:5001/${path}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json', 
+            Authorization: 'faked' 
+        },
         body: JSON.stringify(body)
     });
 }
@@ -105,6 +121,17 @@ export function savePost(post) {
         doPut(`posts/${post.id}`, {title: post.title, body: post.body })
         .then(response => response.json())
         .then(json => dispatch(postUpdated(json)))
+        .catch(e => {
+            console.error(e);
+            dispatch(fetchPosts());
+        })
+    }
+}
+
+export function deletePost(id) {
+    return (dispatch) => {
+        dispatch(postDeleted(id));
+        doDelete(`posts/${id}`)
         .catch(e => {
             console.error(e);
             dispatch(fetchPosts());
