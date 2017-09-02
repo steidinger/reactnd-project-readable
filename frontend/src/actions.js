@@ -7,15 +7,11 @@ export const ADD_VOTE = 'ADD_VOTE';
 const categoriesReceived = categories => ({ type: CATEGORIES_RECEIVED, categories });
 const postsReceived = posts => ({ type: POSTS_RECEIVED, posts });
 const commentsReceived = comments => ({ type: COMMENTS_RECEIVED, comments });
+export const voteAdded = (post_id, vote) => ({ type: ADD_VOTE, post_id, vote });
 
-export const addVote = (post_id, vote) => ({ type: ADD_VOTE, post_id, vote });
-
-function fetchWithAuthorization(path) {
-    return fetch(`http://localhost:5001/${path}`, {
-        headers: {
-            Authorization: 'faked'
-        }
-    });
+function fetchWithAuthorization(path, options = {}) {
+    options.headers = Object.assign({}, options.headers, {Authorization: 'faked'});
+    return fetch(`http://localhost:5001/${path}`, options);
 }
 
 export function fetchCategories() {
@@ -45,6 +41,24 @@ export function fetchComments(post) {
         fetchWithAuthorization(path)
             .then(response => response.json())
             .then(comments => dispatch(commentsReceived(comments)));
+    }
+}
+
+export function addVote(post_id, vote) {
+    return (dispatch) => {
+        fetchWithAuthorization(`posts/${post_id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({option: vote > 0 ? 'upVote' : 'downVote'})
+        })
+        .then(response => {
+            console.log(response);
+            dispatch(voteAdded(post_id, vote));
+        })
+        .catch(e => {
+            console.error(e);
+            dispatch(fetchPosts());
+        })
     }
 }
 
