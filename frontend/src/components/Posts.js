@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 import moment from 'moment';
 import { visiblePosts } from '../selectors';
 import { addVote, deletePost } from '../actions';
@@ -18,12 +17,8 @@ const Posts = ({ posts, onVote, onDelete}) => (
                     <Link to={`/${category}/${id}`}>{title}</Link>
                 </span>
                 <span className="post-list__author">{author}</span>
-                <span className={classNames('post-list__vote-score', { 
-                    'post-list__vote-score--positive': voteScore >= 0, 
-                    'post-list__vote-score--negative': voteScore < 0 
-                    })}>
-                    {voteScore}
-                    <VoteControl onVote={vote => onVote(id, vote)}/>
+                <span className="post-list__vote-score">
+                    <VoteControl value={voteScore} onVote={vote => onVote(id, vote)}/>
                 </span>
                 <span className="post-list__category">{category}</span>
                 <span className="post-list__comments-count">{comments.length}</span>

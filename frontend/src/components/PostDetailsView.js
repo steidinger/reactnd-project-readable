@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { addVote, deletePost, fetchComments } from '../actions';
 import { visibleComments } from '../selectors';
 import VoteControl from './VoteControl';
+import Comments from './Comments';
 
 class PostDetailsView extends React.Component {
 
@@ -51,17 +51,13 @@ class PostDetailsView extends React.Component {
                 <div className="post__author">{author}</div>
                 <div className="post__category">{category}</div>
                 <div className="post__date">{moment(timestamp).format()}</div>
-                <div className="voteScore">{voteScore}
-                    <VoteControl onVote={vote => onVote(id, vote)}/>
-                </div>
+                <VoteControl className="post__vote-score" value={voteScore} onVote={vote => onVote(id, vote)}/>
                 <div className="post__actions">
                     <Link to={`/${category}/${id}/edit`}>Edit Post</Link>
                     <button type="button" onClick={() => onDelete(id)}>Delete</button>
                 </div>
                 <h2>Comments</h2>
-                {hasComments && comments.map(comment => (
-                    <div className="comment" key={comment.id}>{comment.body}</div>
-                ))}
+                {hasComments && <Comments comments={comments} />}
                 {!hasComments && <div>no comments yet</div>}
             </div>
         )
