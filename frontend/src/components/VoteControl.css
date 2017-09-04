@@ -1,0 +1,15 @@
+.vote-score__value {
+    margin-right: 0.5rem;
+}
+
+.vote-score__value--positive {
+    color: green;
+}
+
+.vote-score__value--negative {
+    color: red;
+}
+
+.vote-score__upvote {
+    margin-right: 0.5rem;
+}

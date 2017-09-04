@@ -4,6 +4,8 @@ import moment from 'moment';
 import { addVoteForComment } from '../actions';
 import VoteControl from './VoteControl';
 
+import './Comments.css';
+
 const Comments = ({ comments, onVote }) => (
     <div>
         {comments.map(({id, author, body, voteScore, timestamp}) =>
