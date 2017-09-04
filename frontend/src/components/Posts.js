@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { visiblePosts } from '../selectors';
-import { addVote, deletePost } from '../actions';
+import { addVoteForPost, deletePost } from '../actions';
 import VoteControl from './VoteControl';
 
 import './Posts.css';
@@ -35,7 +35,7 @@ const Posts = ({ posts, onVote, onDelete}) => (
 const mapStateToProps = (state, { activeCategory }) => ({ posts: visiblePosts(state, activeCategory)});
 
 const mapDispatchToProps = (dispatch) => ({
-    onVote: (id, vote) => dispatch(addVote(id, vote)),
+    onVote: (id, vote) => dispatch(addVoteForPost(id, vote)),
     onDelete: (id) => dispatch(deletePost(id))
 });
 

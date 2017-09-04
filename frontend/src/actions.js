@@ -2,6 +2,7 @@ import moment from 'moment';
 import uuid from 'uuid';
 export const CATEGORIES_RECEIVED = 'CATEGORIES_RECEIVED';
 export const COMMENTS_RECEIVED = 'COMMENTS_RECEIVED';
+export const COMMENT_UPDATED = 'COMMENT_UPDATED';
 export const POSTS_RECEIVED = 'POSTS_RECEIVED';
 export const POST_UPDATED = 'POST_UPDATED';
 export const SORT_POSTS = 'SORT_POSTS';
@@ -10,14 +11,17 @@ export const POST_ADDED = 'POST_ADDED';
 export const POST_DELETED = 'POST_DELETED';
 export const POST_SAVED = 'POST_SAVED';
 export const EDIT_POST_FINISHED = 'EDIT_POST_FINISHED';
-export const ADD_VOTE = 'ADD_VOTE';
+export const ADD_VOTE_FOR_POST = 'ADD_VOTE_FOR_POST';
+export const ADD_VOTE_FOR_COMMENT = 'ADD_VOTE_FOR_COMMENT';
 
 const categoriesReceived = categories => ({ type: CATEGORIES_RECEIVED, categories });
 const postsReceived = posts => ({ type: POSTS_RECEIVED, posts });
 const postUpdated = post => ({ type: POST_UPDATED, post });
 const postDeleted = id => ({ type: POST_DELETED, id });
 const commentsReceived = comments => ({ type: COMMENTS_RECEIVED, comments });
-export const voteAdded = (post_id, vote) => ({ type: ADD_VOTE, post_id, vote });
+const commentUpdated = comment => ({ type: COMMENT_UPDATED, comment });
+export const voteForPostAdded = (post_id, vote) => ({ type: ADD_VOTE_FOR_POST, post_id, vote });
+export const voteForCommentAdded = (comment_id, vote) => ({ type: ADD_VOTE_FOR_COMMENT, comment_id, vote });
 export const editPost = post => ({ type: EDIT_POST, post });
 export const editPostFinished = () => ({ type: EDIT_POST_FINISHED });
 
@@ -86,13 +90,27 @@ export function fetchComments(post) {
     }
 }
 
-export function addVote(post_id, vote) {
+export function addVoteForPost(post_id, vote) {
     return (dispatch) => {
         // optimistic update: reflect new state immediately
-        dispatch(voteAdded(post_id, vote));
+        dispatch(voteForPostAdded(post_id, vote));
         doPost(`posts/${post_id}`, {option: vote > 0 ? 'upVote' : 'downVote'})
         .then(response => response.json())
         .then(post => dispatch(postUpdated(post)))
+        .catch(e => {
+            console.error(e);
+            dispatch(fetchPosts());
+        })
+    }
+}
+
+export function addVoteForComment(comment_id, vote) {
+    return (dispatch) => {
+        // optimistic update: reflect new state immediately
+        dispatch(voteForCommentAdded(comment_id, vote));
+        doPost(`comments/${comment_id}`, {option: vote > 0 ? 'upVote' : 'downVote'})
+        .then(response => response.json())
+        .then(comment => dispatch(commentUpdated(comment)))
         .catch(e => {
             console.error(e);
             dispatch(fetchPosts());

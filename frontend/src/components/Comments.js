@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
+import { addVoteForComment } from '../actions';
 import VoteControl from './VoteControl';
 
 const Comments = ({ comments, onVote }) => (
@@ -17,4 +19,9 @@ const Comments = ({ comments, onVote }) => (
     </div>
 )
 
-export default Comments;
+const mapStateToProps = (state, { comments }) => ({ comments });
+
+const mapDispatchToProps = (dispatch) => ({
+    onVote: (id, vote) => dispatch(addVoteForComment(id, vote))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

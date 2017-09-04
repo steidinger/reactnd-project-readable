@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { addVote, deletePost, fetchComments } from '../actions';
+import { addVoteForPost, deletePost, fetchComments } from '../actions';
 import { visibleComments } from '../selectors';
 import VoteControl from './VoteControl';
 import Comments from './Comments';
@@ -71,7 +71,7 @@ const mapStateToProps = (state, { match}) => {
 }
 
 const mapDispatchToProps = (dispatch, { history }) => ({
-    onVote: (post_id, vote) => dispatch(addVote(post_id, vote)),
+    onVote: (post_id, vote) => dispatch(addVoteForPost(post_id, vote)),
     onDelete: (id) => { 
         dispatch(deletePost(id)); 
         history.push('/'); 

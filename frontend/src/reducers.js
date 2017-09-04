@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import {
-    ADD_VOTE,
+    ADD_VOTE_FOR_POST,
     CATEGORIES_RECEIVED,
     COMMENTS_RECEIVED,
+    COMMENT_UPDATED,
     EDIT_POST,
     EDIT_POST_FINISHED,
     POST_DELETED,
@@ -38,7 +39,7 @@ export function posts(state = {}, action) {
                     newState[id] = state[id];
                     return newState;
                 }, {});
-        case ADD_VOTE:
+        case ADD_VOTE_FOR_POST:
             const originalPost = state[action.post_id];
             if (originalPost) {
                 const updatedPost = {
@@ -61,6 +62,8 @@ export function comments(state = {}, action) {
                 return collector;
             }, {});
             return {...state, ...received};
+        case COMMENT_UPDATED: 
+            return { ...state, [action.comment.id]: action.comment};
         default:
             return state;
     }
