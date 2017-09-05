@@ -13,6 +13,10 @@ export const POST_SAVED = 'POST_SAVED';
 export const EDIT_POST_FINISHED = 'EDIT_POST_FINISHED';
 export const ADD_VOTE_FOR_POST = 'ADD_VOTE_FOR_POST';
 export const ADD_VOTE_FOR_COMMENT = 'ADD_VOTE_FOR_COMMENT';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const EDIT_COMMENT_FINISHED = 'EDIT_COMMENT_FINISHED';
+export const COMMENT_ADDED = 'COMMENT_ADDED';
+export const COMMENT_DELETED = 'COMMENT_DELETED';
 
 const categoriesReceived = categories => ({ type: CATEGORIES_RECEIVED, categories });
 const postsReceived = posts => ({ type: POSTS_RECEIVED, posts });
@@ -24,6 +28,8 @@ export const voteForPostAdded = (post_id, vote) => ({ type: ADD_VOTE_FOR_POST, p
 export const voteForCommentAdded = (comment_id, vote) => ({ type: ADD_VOTE_FOR_COMMENT, comment_id, vote });
 export const editPost = post => ({ type: EDIT_POST, post });
 export const editPostFinished = () => ({ type: EDIT_POST_FINISHED });
+export const editComment = comment => ({ type: EDIT_COMMENT, comment });
+export const editCommentFinished = () => ({ type: EDIT_COMMENT_FINISHED });
 
 function doGet(path) {
     return fetch(`http://localhost:5001/${path}`, {
@@ -156,6 +162,35 @@ export function deletePost(id) {
         })
     }
 }
+
+export function addComment(comment) {
+    return (dispatch) => {
+        comment.id = uuid.v4();
+        comment.timestamp = moment().valueOf();
+        dispatch(commentUpdated(comment));
+        doPost('comments', comment)
+        .then(response => response.json())
+        .then(json => dispatch(commentUpdated(json)))
+        .catch(e => {
+            console.error(e);
+            dispatch(fetchPosts());
+        })
+    }
+}
+
+export function saveComment(comment) {
+    return (dispatch) => {
+        dispatch(commentUpdated(comment));
+        doPut(`comments/${comment.id}`, {body: comment.body, timestamp: moment().valueOf() })
+        .then(response => response.json())
+        .then(json => dispatch(commentUpdated(json)))
+        .catch(e => {
+            console.error(e);
+            dispatch(fetchPosts());
+        })
+    }
+}
+
 
 export const sortPosts = (sortField) => {
     switch (sortField) {

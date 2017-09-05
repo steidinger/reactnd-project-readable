@@ -4,6 +4,8 @@ import {
     CATEGORIES_RECEIVED,
     COMMENTS_RECEIVED,
     COMMENT_UPDATED,
+    EDIT_COMMENT,
+    EDIT_COMMENT_FINISHED,
     EDIT_POST,
     EDIT_POST_FINISHED,
     POST_DELETED,
@@ -69,7 +71,14 @@ export function comments(state = {}, action) {
     }
 }
 
-export function postsApp(state = { sortField: 'voteScore', sortAscending: false, currentlyEditedPost: undefined }, action) {
+const defaultUiState = { 
+    sortField: 'voteScore', 
+    sortAscending: false, 
+    currentlyEditedComment: undefined, 
+    currentlyEditedPost: undefined 
+};
+
+export function postsApp(state = defaultUiState, action) {
     switch (action.type) {
         case SORT_POSTS:
             return {
@@ -77,6 +86,16 @@ export function postsApp(state = { sortField: 'voteScore', sortAscending: false,
                 sortField: action.sortField,
                 sortAscending: action.ascending
             };
+        case EDIT_COMMENT:
+            return {
+                ...state,
+                currentlyEditedComment: action.comment
+            }
+        case EDIT_COMMENT_FINISHED:
+            return {
+                ...state,
+                currentlyEditedComment: undefined
+            }
         case EDIT_POST:
             return {
                 ...state,

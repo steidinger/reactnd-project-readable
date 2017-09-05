@@ -57,7 +57,7 @@ class PostDetailsView extends React.Component {
                     <button type="button" onClick={() => onDelete(id)}>Delete</button>
                 </div>
                 <h2>Comments</h2>
-                {hasComments && <Comments comments={comments} />}
+                {hasComments && <Comments comments={comments} post_id={id} />}
                 {!hasComments && <div>no comments yet</div>}
             </div>
         )
