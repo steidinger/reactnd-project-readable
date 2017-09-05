@@ -4,6 +4,7 @@ import moment from 'moment';
 import {
     addComment,
     addVoteForComment,
+    deleteComment,
     editComment,
     editCommentFinished,
     saveComment
@@ -21,7 +22,7 @@ class Comments extends React.Component {
     }
 
     render() {
-        const { comments, currentlyEditedComment = undefined, onVote, onAddComment, onEdit, onSave, onCancel } = this.props;
+        const { comments, currentlyEditedComment = undefined, onVote, onAddComment, onDelete, onEdit, onSave, onCancel } = this.props;
         const isAddingComment = currentlyEditedComment && !currentlyEditedComment.id;
         const editedId = currentlyEditedComment && currentlyEditedComment.id;
 
@@ -48,6 +49,7 @@ class Comments extends React.Component {
                         </div>
                         <div className="comment_timestamp">{moment(comment.timestamp).fromNow()}</div>
                         <button type="button" onClick={() => onEdit(comment)}>Edit</button>
+                        <button type="button" onClick={() => onDelete(comment)}>Delete</button>
                     </div>
                 )}
                 {!isAddingComment && <button type="button" onClick={onAddComment}>Add Comment</button>}
@@ -90,6 +92,7 @@ const mapDispatchToProps = (dispatch, { post_id }) => ({
     onAddComment: () => dispatch(editComment({ parentId: post_id })),
     onEdit: (comment) => dispatch(editComment(comment)),
     onCancel: () => dispatch(editCommentFinished()),
+    onDelete: (comment) => dispatch(deleteComment(comment.id)),
     onSave: (comment) => {
         dispatch(editCommentFinished());
         if (!comment.id) {

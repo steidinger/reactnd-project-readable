@@ -3,6 +3,7 @@ import {
     ADD_VOTE_FOR_POST,
     CATEGORIES_RECEIVED,
     COMMENTS_RECEIVED,
+    COMMENT_DELETED,
     COMMENT_UPDATED,
     EDIT_COMMENT,
     EDIT_COMMENT_FINISHED,
@@ -66,6 +67,13 @@ export function comments(state = {}, action) {
             return {...state, ...received};
         case COMMENT_UPDATED: 
             return { ...state, [action.comment.id]: action.comment};
+        case COMMENT_DELETED:
+            return Object.keys(state)
+                .filter(id => id !== action.id)
+                .reduce((newState, id) => {
+                    newState[id] = state[id];
+                    return newState;
+                }, {});
         default:
             return state;
     }

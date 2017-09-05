@@ -24,6 +24,7 @@ const postUpdated = post => ({ type: POST_UPDATED, post });
 const postDeleted = id => ({ type: POST_DELETED, id });
 const commentsReceived = comments => ({ type: COMMENTS_RECEIVED, comments });
 const commentUpdated = comment => ({ type: COMMENT_UPDATED, comment });
+const commentDeleted = id => ({ type: COMMENT_DELETED, id });
 export const voteForPostAdded = (post_id, vote) => ({ type: ADD_VOTE_FOR_POST, post_id, vote });
 export const voteForCommentAdded = (comment_id, vote) => ({ type: ADD_VOTE_FOR_COMMENT, comment_id, vote });
 export const editPost = post => ({ type: EDIT_POST, post });
@@ -184,6 +185,17 @@ export function saveComment(comment) {
         doPut(`comments/${comment.id}`, {body: comment.body, timestamp: moment().valueOf() })
         .then(response => response.json())
         .then(json => dispatch(commentUpdated(json)))
+        .catch(e => {
+            console.error(e);
+            dispatch(fetchPosts());
+        })
+    }
+}
+
+export function deleteComment(id) {
+    return (dispatch) => {
+        dispatch(commentDeleted(id));
+        doDelete(`comments/${id}`)
         .catch(e => {
             console.error(e);
             dispatch(fetchPosts());
