@@ -21,19 +21,33 @@ class Comments extends React.Component {
     }
 
     render() {
-        const { comments, currentlyEditedComment = undefined, onVote, onAddComment, onSave, onCancel } = this.props;
+        const { comments, currentlyEditedComment = undefined, onVote, onAddComment, onEdit, onSave, onCancel } = this.props;
         const isAddingComment = currentlyEditedComment && !currentlyEditedComment.id;
+        const editedId = currentlyEditedComment && currentlyEditedComment.id;
 
         return (
             <div>
-                {comments.map(({ id, author, body, voteScore, timestamp }) =>
-                    <div className="comment" key={id}>
-                        <div className="comment__body">{body}</div>
-                        <div className="comment__author">{author}</div>
+                {comments.map((comment) =>
+                    <div className="comment" key={comment.id}>
+                        {comment.id === editedId && 
+                            <form>
+                                <input className="comment__body" 
+                                    value={currentlyEditedComment.body} 
+                                    onChange={(event) => this.handleChange('body', event.target.value)}
+                                />
+                                <button type="button" onClick={() => onSave(currentlyEditedComment)}>Save</button>
+                                <button type="button" onClick={onCancel}>Cancel</button>
+                            </form>
+                        }
+                        {comment.id !== editedId && 
+                            <div className="comment__body">{comment.body}</div>
+                        }
+                        <div className="comment__author">{comment.author}</div>
                         <div className="comment__vote-score">
-                            <VoteControl value={voteScore} onVote={vote => onVote(id, vote)} />
+                            <VoteControl value={comment.voteScore} onVote={vote => onVote(comment.id, vote)} />
                         </div>
-                        <div className="comment_timestamp">{moment(timestamp).fromNow()}</div>
+                        <div className="comment_timestamp">{moment(comment.timestamp).fromNow()}</div>
+                        <button type="button" onClick={() => onEdit(comment)}>Edit</button>
                     </div>
                 )}
                 {!isAddingComment && <button type="button" onClick={onAddComment}>Add Comment</button>}
@@ -77,6 +91,7 @@ const mapDispatchToProps = (dispatch, { post_id }) => ({
     onEdit: (comment) => dispatch(editComment(comment)),
     onCancel: () => dispatch(editCommentFinished()),
     onSave: (comment) => {
+        dispatch(editCommentFinished());
         if (!comment.id) {
             dispatch(addComment(comment))
         }
