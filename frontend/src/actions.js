@@ -17,6 +17,7 @@ export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const EDIT_COMMENT_FINISHED = 'EDIT_COMMENT_FINISHED';
 export const COMMENT_ADDED = 'COMMENT_ADDED';
 export const COMMENT_DELETED = 'COMMENT_DELETED';
+export const FORM_VALIDATION_FAILED = 'FORM_VALIDATION_FAILED';
 
 const categoriesReceived = categories => ({ type: CATEGORIES_RECEIVED, categories });
 const postsReceived = posts => ({ type: POSTS_RECEIVED, posts });
@@ -31,26 +32,27 @@ export const editPost = post => ({ type: EDIT_POST, post });
 export const editPostFinished = () => ({ type: EDIT_POST_FINISHED });
 export const editComment = comment => ({ type: EDIT_COMMENT, comment });
 export const editCommentFinished = () => ({ type: EDIT_COMMENT_FINISHED });
+export const formValidationFailed = (messages) => ({ type: FORM_VALIDATION_FAILED, messages });
 
 function doGet(path) {
     return fetch(`http://localhost:5001/${path}`, {
-        headers: {Authorization: 'faked'}
+        headers: { Authorization: 'faked' }
     });
 }
 
 function doDelete(path) {
     return fetch(`http://localhost:5001/${path}`, {
         method: 'DELETE',
-        headers: {Authorization: 'faked'}
+        headers: { Authorization: 'faked' }
     });
 }
 
 function doPost(path, body) {
     return fetch(`http://localhost:5001/${path}`, {
         method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json', 
-            Authorization: 'faked' 
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'faked'
         },
         body: JSON.stringify(body)
     });
@@ -59,9 +61,9 @@ function doPost(path, body) {
 function doPut(path, body) {
     return fetch(`http://localhost:5001/${path}`, {
         method: 'PUT',
-        headers: { 
-            'Content-Type': 'application/json', 
-            Authorization: 'faked' 
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'faked'
         },
         body: JSON.stringify(body)
     });
@@ -101,13 +103,13 @@ export function addVoteForPost(post_id, vote) {
     return (dispatch) => {
         // optimistic update: reflect new state immediately
         dispatch(voteForPostAdded(post_id, vote));
-        doPost(`posts/${post_id}`, {option: vote > 0 ? 'upVote' : 'downVote'})
-        .then(response => response.json())
-        .then(post => dispatch(postUpdated(post)))
-        .catch(e => {
-            console.error(e);
-            dispatch(fetchPosts());
-        })
+        doPost(`posts/${post_id}`, { option: vote > 0 ? 'upVote' : 'downVote' })
+            .then(response => response.json())
+            .then(post => dispatch(postUpdated(post)))
+            .catch(e => {
+                console.error(e);
+                dispatch(fetchPosts());
+            })
     }
 }
 
@@ -115,13 +117,13 @@ export function addVoteForComment(comment_id, vote) {
     return (dispatch) => {
         // optimistic update: reflect new state immediately
         dispatch(voteForCommentAdded(comment_id, vote));
-        doPost(`comments/${comment_id}`, {option: vote > 0 ? 'upVote' : 'downVote'})
-        .then(response => response.json())
-        .then(comment => dispatch(commentUpdated(comment)))
-        .catch(e => {
-            console.error(e);
-            dispatch(fetchPosts());
-        })
+        doPost(`comments/${comment_id}`, { option: vote > 0 ? 'upVote' : 'downVote' })
+            .then(response => response.json())
+            .then(comment => dispatch(commentUpdated(comment)))
+            .catch(e => {
+                console.error(e);
+                dispatch(fetchPosts());
+            })
     }
 }
 
@@ -131,25 +133,25 @@ export function addPost(post) {
         post.timestamp = moment().valueOf();
         dispatch(postUpdated(post));
         doPost('posts', post)
-        .then(response => response.json())
-        .then(json => dispatch(postUpdated(json)))
-        .catch(e => {
-            console.error(e);
-            dispatch(fetchPosts());
-        })
+            .then(response => response.json())
+            .then(json => dispatch(postUpdated(json)))
+            .catch(e => {
+                console.error(e);
+                dispatch(fetchPosts());
+            });
     }
 }
 
 export function savePost(post) {
     return (dispatch) => {
         dispatch(postUpdated(post));
-        doPut(`posts/${post.id}`, {title: post.title, body: post.body })
-        .then(response => response.json())
-        .then(json => dispatch(postUpdated(json)))
-        .catch(e => {
-            console.error(e);
-            dispatch(fetchPosts());
-        })
+        doPut(`posts/${post.id}`, { title: post.title, body: post.body })
+            .then(response => response.json())
+            .then(json => dispatch(postUpdated(json)))
+            .catch(e => {
+                console.error(e);
+                dispatch(fetchPosts());
+            })
     }
 }
 
@@ -157,10 +159,10 @@ export function deletePost(id) {
     return (dispatch) => {
         dispatch(postDeleted(id));
         doDelete(`posts/${id}`)
-        .catch(e => {
-            console.error(e);
-            dispatch(fetchPosts());
-        })
+            .catch(e => {
+                console.error(e);
+                dispatch(fetchPosts());
+            })
     }
 }
 
@@ -170,25 +172,25 @@ export function addComment(comment) {
         comment.timestamp = moment().valueOf();
         dispatch(commentUpdated(comment));
         doPost('comments', comment)
-        .then(response => response.json())
-        .then(json => dispatch(commentUpdated(json)))
-        .catch(e => {
-            console.error(e);
-            dispatch(fetchPosts());
-        })
+            .then(response => response.json())
+            .then(json => dispatch(commentUpdated(json)))
+            .catch(e => {
+                console.error(e);
+                dispatch(fetchPosts());
+            })
     }
 }
 
 export function saveComment(comment) {
     return (dispatch) => {
         dispatch(commentUpdated(comment));
-        doPut(`comments/${comment.id}`, {body: comment.body, timestamp: moment().valueOf() })
-        .then(response => response.json())
-        .then(json => dispatch(commentUpdated(json)))
-        .catch(e => {
-            console.error(e);
-            dispatch(fetchPosts());
-        })
+        doPut(`comments/${comment.id}`, { body: comment.body, timestamp: moment().valueOf() })
+            .then(response => response.json())
+            .then(json => dispatch(commentUpdated(json)))
+            .catch(e => {
+                console.error(e);
+                dispatch(fetchPosts());
+            })
     }
 }
 
@@ -196,10 +198,10 @@ export function deleteComment(id) {
     return (dispatch) => {
         dispatch(commentDeleted(id));
         doDelete(`comments/${id}`)
-        .catch(e => {
-            console.error(e);
-            dispatch(fetchPosts());
-        })
+            .catch(e => {
+                console.error(e);
+                dispatch(fetchPosts());
+            })
     }
 }
 

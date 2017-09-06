@@ -9,6 +9,7 @@ import {
     EDIT_COMMENT_FINISHED,
     EDIT_POST,
     EDIT_POST_FINISHED,
+    FORM_VALIDATION_FAILED,
     POST_DELETED,
     POSTS_RECEIVED,
     POST_UPDATED,
@@ -83,7 +84,8 @@ const defaultUiState = {
     sortField: 'voteScore', 
     sortAscending: false, 
     currentlyEditedComment: undefined, 
-    currentlyEditedPost: undefined 
+    currentlyEditedPost: undefined,
+    formValidationErrors: undefined 
 };
 
 export function postsApp(state = defaultUiState, action) {
@@ -102,7 +104,8 @@ export function postsApp(state = defaultUiState, action) {
         case EDIT_COMMENT_FINISHED:
             return {
                 ...state,
-                currentlyEditedComment: undefined
+                currentlyEditedComment: undefined,
+                formValidationErrors: undefined                
             }
         case EDIT_POST:
             return {
@@ -112,7 +115,13 @@ export function postsApp(state = defaultUiState, action) {
         case EDIT_POST_FINISHED:
             return {
                 ...state,
-                currentlyEditedPost: undefined
+                currentlyEditedPost: undefined,
+                formValidationErrors: undefined
+            }
+        case FORM_VALIDATION_FAILED:
+            return {
+                ...state,
+                formValidationErrors: action.messages
             }
         default:
             return state;
