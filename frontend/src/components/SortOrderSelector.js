@@ -4,12 +4,15 @@ import {sortPosts} from '../actions';
 
 const SortOrderSelector = ({sortField, onSetSortOrder}) => {
     return (
-        <select value={sortField} onChange={(event) => onSetSortOrder(event.target.value)}>
-            <option value="author">Author</option>
-            <option value="category">Category</option>
-            <option value="timestamp">Time Posted</option>
-            <option value="voteScore">Vote Score</option>
-        </select>
+        <label className="sort-order-selector">
+            <span>Sort posts by</span>
+            <select value={sortField} onChange={(event) => onSetSortOrder(event.target.value)}>
+                <option value="author">Author</option>
+                <option value="category">Category</option>
+                <option value="timestamp">Time Posted</option>
+                <option value="voteScore">Vote Score</option>
+            </select>
+        </label>
     )
 }
 

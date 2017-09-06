@@ -24,3 +24,12 @@
 .form-actions button:last-child {
   margin-right: 0;
 }
+
+.sort-order-selector {
+  display: block;
+  text-align: right;
+}
+
+.sort-order-selector select {
+  margin-left: 0.5rem;
+}
