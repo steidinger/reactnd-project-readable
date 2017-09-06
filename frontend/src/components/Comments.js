@@ -22,17 +22,19 @@ class Comments extends React.Component {
     }
 
     render() {
-        const { comments, currentlyEditedComment = undefined, onVote, onAddComment, onDelete, onEdit, onSave, onCancel } = this.props;
+        const { className, comments, currentlyEditedComment = undefined, onVote, onAddComment, onDelete, onEdit, onSave, onCancel } = this.props;
         const isAddingComment = currentlyEditedComment && !currentlyEditedComment.id;
         const editedId = currentlyEditedComment && currentlyEditedComment.id;
 
         return (
-            <div>
+            <div className={className}>
+                <h2>Comments</h2>
+                {comments.length === 0 && <div>No comments yet</div>}
                 {comments.map((comment) =>
                     <div className="comment" key={comment.id}>
                         {comment.id === editedId && 
-                            <form>
-                                <input className="comment__body" 
+                            <form className="comment__body">
+                                <input  
                                     value={currentlyEditedComment.body} 
                                     onChange={(event) => this.handleChange('body', event.target.value)}
                                 />
@@ -47,9 +49,12 @@ class Comments extends React.Component {
                         <div className="comment__vote-score">
                             <VoteControl value={comment.voteScore} onVote={vote => onVote(comment.id, vote)} />
                         </div>
-                        <div className="comment_timestamp">{moment(comment.timestamp).fromNow()}</div>
-                        <button type="button" onClick={() => onEdit(comment)}>Edit</button>
-                        <button type="button" onClick={() => onDelete(comment)}>Delete</button>
+                        <div className="comment__date">{moment(comment.timestamp).fromNow()}</div>
+                        {comment.id !== editedId && <div className="comment__actions">
+                            <button type="button" onClick={() => onEdit(comment)}>Edit</button>
+                            <button type="button" onClick={() => onDelete(comment)}>Delete</button>
+                        </div>
+                        }
                     </div>
                 )}
                 {!isAddingComment && <button type="button" onClick={onAddComment}>Add Comment</button>}

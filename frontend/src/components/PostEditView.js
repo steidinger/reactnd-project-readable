@@ -56,8 +56,10 @@ class PostEditView extends React.Component {
                             }
                         </select>}
                 </div>
-                <button type="button" onClick={() => onSave(post)}>Save</button>
-                <button type="button" onClick={() => onCancel(post)}>Cancel</button>
+                <div className="form-actions">
+                    <button type="button" onClick={() => onSave(post)}>Save</button>
+                    <button type="button" onClick={() => onCancel(post)}>Cancel</button>
+                </div>
             </form>
         )
     };

@@ -16,12 +16,12 @@ const Posts = ({ posts, onVote, onDelete}) => (
                 <span className="post-list__post-title">
                     <Link to={`/${category}/${id}`}>{title}</Link>
                 </span>
-                <span className="post-list__author">{author}</span>
+                <span className="post-list__author">by: {author}</span>
                 <span className="post-list__vote-score">
                     <VoteControl value={voteScore} onVote={vote => onVote(id, vote)}/>
                 </span>
-                <span className="post-list__category">{category}</span>
-                <span className="post-list__comments-count">{comments.length}</span>
+                <span className="post-list__category">in: {category}</span>
+                <span className="post-list__comments-count">{comments.length} comments</span>
                 <span className="post-list__date">{moment(timestamp).fromNow()}</span>
                 <span className="post-list__actions">
                     <Link to={`/${category}/${id}/edit`}>Edit</Link>

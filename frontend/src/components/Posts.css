@@ -2,15 +2,18 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    max-width: 800px;
 }
 
 .post-list__post {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 33% 33% 33%;
     grid-template-areas: 
-    "title author"
-    "score category";
+    "title title title"
+    "author category date"
+    "vote-score ... comments"
+    "... ... actions";
     padding-bottom: 10px;
     border-bottom: 1px dotted grey;
     margin: 5px 0;
@@ -25,11 +28,34 @@
 }
 
 .post-list__vote-score {
-    grid-area: score
+    grid-area: vote-score
 }
 
 .post-list__category {
     grid-area: category;
+    text-align: center;
+}
+
+.post-list__comments-count {
+    grid-area: comments;
+    text-align: right;
+    margin-right: 1rem;
+}
+
+.post-list__date {
+    grid-area: date;
+    text-align: right;
+    margin-right: 1rem;
+}
+
+.post-list__actions {
+    grid-area: actions;
+    text-align: right;
+    margin-right: 1rem;
+}
+
+.post-list__actions a {
+    margin-right: 1rem;
 }
 
 .post-list__vote-score--positive {

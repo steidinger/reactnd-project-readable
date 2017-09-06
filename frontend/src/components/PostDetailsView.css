@@ -1,0 +1,47 @@
+.post {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-areas: 
+    "title title title"
+    "body body body"
+    "author category date"
+    "vote-score ... actions";
+}
+
+.post__title {
+    grid-area: title;
+}
+
+.post__body {
+    grid-area: body;
+}
+
+.post__author {
+    grid-area: author;
+}
+
+.post__category {
+    grid-area: category;
+    text-align: center;
+}
+
+.post__date {
+    grid-area: date;
+    text-align: right;
+    margin-right: 1rem;    
+}
+
+.post__vote-score {
+    grid-area: vote-score;
+}
+
+.post__actions {
+    grid-area: actions;
+    text-align: right;
+    margin-right: 1rem;    
+}
+
+.post__actions a {
+    margin-right: 1rem;
+}

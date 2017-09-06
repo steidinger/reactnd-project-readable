@@ -1,3 +1,26 @@
 .App {
   margin: 1rem;
 }
+
+.form-row label {
+  display: inline-block;
+  vertical-align: top;
+  width: 10rem;
+}
+
+.form-row textarea {
+  height: 200px;
+  width: 30rem;
+}
+
+.form-actions button {
+  margin: 0.5rem;
+}
+
+.form-actions button:first-child {
+  margin-left: 0;
+}
+
+.form-actions button:last-child {
+  margin-right: 0;
+}
