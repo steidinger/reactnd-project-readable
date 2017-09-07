@@ -7,9 +7,11 @@ import {
     deleteComment,
     editComment,
     editCommentFinished,
-    saveComment
+    saveComment,
+    formValidationFailed
 } from '../actions';
 import VoteControl from './VoteControl';
+import FormValidationErrors from './FormValidationErrors';
 
 import './Comments.css';
 
@@ -34,6 +36,7 @@ class Comments extends React.Component {
                     <div className="comment" key={comment.id}>
                         {comment.id === editedId && 
                             <form className="comment__body">
+                                <FormValidationErrors />
                                 <input  
                                     value={currentlyEditedComment.body} 
                                     onChange={(event) => this.handleChange('body', event.target.value)}
@@ -61,6 +64,7 @@ class Comments extends React.Component {
                 {isAddingComment &&
                     <form className="comment-form">
                         <h2>Add new comment</h2>
+                        <FormValidationErrors />
                         <div className="form-row">
                             <label htmlFor="comment_body">Comment</label>
                             <input id="comment_body"
@@ -86,6 +90,17 @@ class Comments extends React.Component {
     }
 }
 
+const validateComment = (comment) => {
+    let messages = [];
+    if (!comment.body || comment.body.trim() === '') {
+        messages.push('Comment text is missing');
+    }
+    if (!comment.author || comment.author.trim() === '') {
+        messages.push('Author is missing');
+    }    
+    return (messages.length > 0) ? messages : null;
+}
+
 const mapStateToProps = (state, { comments, post_id }) => ({
     comments,
     post_id,
@@ -99,12 +114,18 @@ const mapDispatchToProps = (dispatch, { post_id }) => ({
     onCancel: () => dispatch(editCommentFinished()),
     onDelete: (comment) => dispatch(deleteComment(comment.id)),
     onSave: (comment) => {
-        dispatch(editCommentFinished());
-        if (!comment.id) {
-            dispatch(addComment(comment))
+        const validationErrors = validateComment(comment);
+        if (validationErrors) {
+            dispatch(formValidationFailed(validationErrors));
         }
         else {
-            dispatch(saveComment(comment));
+            dispatch(editCommentFinished());
+            if (!comment.id) {
+                dispatch(addComment(comment))
+            }
+            else {
+                dispatch(saveComment(comment));
+            }
         }
     }
 });

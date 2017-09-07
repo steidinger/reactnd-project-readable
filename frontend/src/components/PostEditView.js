@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addPost, editPost, editPostFinished, formValidationFailed, savePost } from '../actions';
+import FormValidationErrors from './FormValidationErrors';
 
 class PostEditView extends React.Component {
 
@@ -25,11 +26,7 @@ class PostEditView extends React.Component {
         return (
             <form className="post-form">
                 <h1>Edit Post</h1>
-                {formValidationErrors && (
-                    <ul className="form-errors">
-                        {formValidationErrors.map(message => <li>{message}</li>)}
-                    </ul>
-                )}
+                <FormValidationErrors messages={formValidationErrors} />
                 <div className="form-row">
                     <label htmlFor="post_id">Title</label>
                     <input id="post_id" value={post.title} onChange={(e) => this.handleChange('title', e.target.value)} />
@@ -72,16 +69,16 @@ class PostEditView extends React.Component {
 const validatePost = (post) => {
     let messages = [];
     if (!post.title || post.title.trim() === '') {
-        messages.push('Please provide a title');
+        messages.push('Title is missing');
     }
     if (!post.body || post.body.trim() === '') {
-        messages.push('Please provide a text');
+        messages.push('Text is missing');
     }
     if (!post.author || post.author.trim() === '') {
-        messages.push('Please provide an author');
+        messages.push('Author is missing');
     }
     if (!post.category || post.category.trim() === '') {
-        messages.push('Please select a category');
+        messages.push('Category must be selected');
     }
     return (messages.length > 0) ? messages : null;
 }
