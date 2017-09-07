@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Switch, Route } from 'react-router';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Switch, Route} from 'react-router';
+import {Link} from 'react-router-dom';
 import IndexView from './components/IndexView';
 import PostDetailsView from './components/PostDetailsView';
 import PostEditView from './components/PostEditView';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import CategoriesMenu from './CategoriesMenu';
 import Posts from './Posts';
 import SortOrderSelector from './SortOrderSelector';
@@ -14,7 +14,7 @@ const IndexView = ({activeCategory}) => (
   </div>
 );
 
-const mapStateToProps = (state, { match }) => ({
+const mapStateToProps = (state, {match}) => ({
   activeCategory: match.params.category ? match.params.category : undefined
 });
 
