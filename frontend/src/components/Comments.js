@@ -41,8 +41,8 @@ class Comments extends React.Component {
                                     value={currentlyEditedComment.body} 
                                     onChange={(event) => this.handleChange('body', event.target.value)}
                                 />
-                                <button type="button" onClick={() => onSave(currentlyEditedComment)}>Save</button>
-                                <button type="button" onClick={onCancel}>Cancel</button>
+                                <button className="button" type="button" onClick={() => onSave(currentlyEditedComment)}>Save</button>
+                                <button className="button" type="button" onClick={onCancel}>Cancel</button>
                             </form>
                         }
                         {comment.id !== editedId && 
@@ -54,13 +54,13 @@ class Comments extends React.Component {
                         </div>
                         <div className="comment__date">{moment(comment.timestamp).fromNow()}</div>
                         {comment.id !== editedId && <div className="comment__actions">
-                            <button type="button" onClick={() => onEdit(comment)}>Edit</button>
-                            <button type="button" onClick={() => onDelete(comment)}>Delete</button>
+                            <button type="button" className="button" onClick={() => onEdit(comment)}>Edit</button>
+                            <button type="button" className="button" onClick={() => onDelete(comment)}>Delete</button>
                         </div>
                         }
                     </div>
                 )}
-                {!isAddingComment && <button type="button" onClick={onAddComment}>Add Comment</button>}
+                {!isAddingComment && <button type="button" className="button" onClick={onAddComment}>Add Comment</button>}
                 {isAddingComment &&
                     <form className="comment-form">
                         <h2>Add new comment</h2>
@@ -80,8 +80,8 @@ class Comments extends React.Component {
                             />
                         </div>
                         <div className="form-actions">
-                            <button type="button" onClick={() => onSave(currentlyEditedComment)}>Save</button>
-                            <button type="button" onClick={onCancel}>Cancel</button>
+                            <button type="button" className="button" onClick={() => onSave(currentlyEditedComment)}>Save</button>
+                            <button type="button" className="button" onClick={onCancel}>Cancel</button>
                         </div>
                     </form>
                 }

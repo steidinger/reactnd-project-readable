@@ -32,12 +32,12 @@ class PostDetailsView extends React.Component {
         const {
             post: {
                 id,
-                title,
-                body,
-                author,
-                category,
-                voteScore,
-                timestamp
+            title,
+            body,
+            author,
+            category,
+            voteScore,
+            timestamp
             },
             comments,
             onVote,
@@ -46,37 +46,37 @@ class PostDetailsView extends React.Component {
 
         return (
             <div>
-            <div className="post">
-                <h1 className="post__title">{title}</h1>
-                <p className="post__body">{body}</p>
-                <div className="post__author">by: {author}</div>
-                <div className="post__category">in: {category}</div>
-                <div className="post__date">{moment(timestamp).format()}</div>
-                <VoteControl className="post__vote-score" value={voteScore} onVote={vote => onVote(id, vote)}/>
-                <div className="post__actions">
-                    <Link to={`/${category}/${id}/edit`}>Edit Post</Link>
-                    <button type="button" onClick={() => onDelete(id)}>Delete</button>
+                <div className="post">
+                    <h1 className="post__title">{title}</h1>
+                    <p className="post__body">{body}</p>
+                    <div className="post__author">by: {author}</div>
+                    <div className="post__category">in: {category}</div>
+                    <div className="post__date">{moment(timestamp).format()}</div>
+                    <VoteControl className="post__vote-score" value={voteScore} onVote={vote => onVote(id, vote)} />
+                    <div className="post__actions">
+                        <Link className="button" to={`/${category}/${id}/edit`}>Edit Post</Link>
+                        <button type="button" className="button" onClick={() => onDelete(id)}>Delete</button>
+                    </div>
                 </div>
+                <Comments className="post__comments" comments={comments} post_id={id} />
             </div>
-            <Comments className="post__comments" comments={comments} post_id={id} />
-            </div>
-    )
+        )
     };
 }
 
-const mapStateToProps = (state, { match}) => {
+const mapStateToProps = (state, { match }) => {
     const post = state.posts[match.params.post_id];
     const comments = post ? visibleComments(state, post) : [];
-    return { post, comments};
+    return { post, comments };
 }
 
 const mapDispatchToProps = (dispatch, { history }) => ({
     onVote: (post_id, vote) => dispatch(addVoteForPost(post_id, vote)),
-    onDelete: (id) => { 
-        dispatch(deletePost(id)); 
-        history.push('/'); 
-    }, 
-    dispatch 
+    onDelete: (id) => {
+        dispatch(deletePost(id));
+        history.push('/');
+    },
+    dispatch
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetailsView);

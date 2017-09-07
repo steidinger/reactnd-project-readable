@@ -15,8 +15,8 @@ const VoteControl = ({ value, onVote, ...rest }) => {
             <span className={voteScoreClass}>
                 {value}
             </span>
-            <button className="vote-score__upvote" onClick={() => onVote(+1)}>Upvote</button>
-            <button className="vote-score__downvote" onClick={() => onVote(-1)}>Downvote</button>
+            <button className="button vote-score__upvote" onClick={() => onVote(+1)}>Upvote</button>
+            <button className="button vote-score__downvote" onClick={() => onVote(-1)}>Downvote</button>
         </span>
     )
 };

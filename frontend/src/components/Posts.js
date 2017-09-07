@@ -24,8 +24,8 @@ const Posts = ({ posts, onVote, onDelete}) => (
                 <span className="post-list__comments-count">{comments.length} comments</span>
                 <span className="post-list__date">{moment(timestamp).fromNow()}</span>
                 <span className="post-list__actions">
-                    <Link to={`/${category}/${id}/edit`}>Edit</Link>
-                    <button type="button" onClick={() => onDelete(id)}>Delete</button>
+                    <Link  className="button" to={`/${category}/${id}/edit`}>Edit</Link>
+                    <button type="button" className="button" onClick={() => onDelete(id)}>Delete</button>
                 </span>
             </li>
         ))}
