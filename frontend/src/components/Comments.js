@@ -9,7 +9,7 @@ import {
   editCommentFinished,
   saveComment,
   formValidationFailed
-} from '../actions';
+} from '../state/actions';
 import VoteControl from './VoteControl';
 import FormValidationErrors from './FormValidationErrors';
 

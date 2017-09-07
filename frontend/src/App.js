@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Switch, Route} from 'react-router';
 import {Link} from 'react-router-dom';
-import IndexView from './components/IndexView';
-import PostDetailsView from './components/PostDetailsView';
-import PostEditView from './components/PostEditView';
+import IndexView from './views/IndexView';
+import PostDetailsView from './views/PostDetailsView';
+import PostEditView from './views/PostEditView';
 import './App.css';
 
 class App extends Component {

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd frontend & npm install",
     "start": "concurrently \"npm -prefix api-server start\" \"npm -prefix frontend start\""
   },
   "author": "Frank Steidinger",

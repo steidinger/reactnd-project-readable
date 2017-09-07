@@ -2,10 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
-import {addVoteForPost, deletePost, fetchComments} from '../actions';
-import {visibleComments} from '../selectors';
-import VoteControl from './VoteControl';
-import Comments from './Comments';
+import {addVoteForPost, deletePost, fetchComments} from '../state/actions';
+import {visibleComments} from '../state/selectors';
+import VoteControl from '../components/VoteControl';
+import Comments from '../components/Comments';
 
 import './PostDetailsView.css';
 

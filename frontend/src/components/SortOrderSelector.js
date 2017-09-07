@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {sortPosts} from '../actions';
+import {sortPosts} from '../state/actions';
 
 const SortOrderSelector = ({sortField, onSetSortOrder}) => {
   return (
