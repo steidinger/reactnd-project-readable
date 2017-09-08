@@ -45,7 +45,7 @@ class PostDetailsView extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <main>
         <div className="post">
           <h1 className="post__title">{title}</h1>
           <p className="post__body">{body}</p>
@@ -59,7 +59,7 @@ class PostDetailsView extends React.Component {
           </div>
         </div>
         <Comments className="post__comments" comments={comments} post_id={id} />
-      </div>
+      </main>
     );
   }
 }

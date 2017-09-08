@@ -24,45 +24,47 @@ class PostEditView extends React.Component {
     const isNewPost = !post.id;
 
     return (
-      <form className="post-form">
-        <h1>Edit Post</h1>
-        <FormValidationErrors messages={formValidationErrors}/>
-        <div className="form-row">
-          <label htmlFor="post_id">Title</label>
-          <input id="post_id" value={post.title} onChange={(e) => this.handleChange('title', e.target.value)}/>
-        </div>
+      <main>
+        <form className="post-form">
+          <h1>Edit Post</h1>
+          <FormValidationErrors messages={formValidationErrors}/>
+          <div className="form-row">
+            <label htmlFor="post_id">Title</label>
+            <input id="post_id" value={post.title} onChange={(e) => this.handleChange('title', e.target.value)}/>
+          </div>
 
-        <div className="form-row">
-          <label htmlFor="post_body">Text</label>
-          <textarea id="post_body" value={post.body} onChange={(e) => this.handleChange('body', e.target.value)}/>
-        </div>
+          <div className="form-row">
+            <label htmlFor="post_body">Text</label>
+            <textarea id="post_body" value={post.body} onChange={(e) => this.handleChange('body', e.target.value)}/>
+          </div>
 
-        <div className="form-row">
-          <label htmlFor="post_author">Author</label>
-          <input id="post_author" value={post.author} onChange={(e) => this.handleChange('author', e.target.value)}
-                 disabled={!isNewPost}/>
-        </div>
+          <div className="form-row">
+            <label htmlFor="post_author">Author</label>
+            <input id="post_author" value={post.author} onChange={(e) => this.handleChange('author', e.target.value)}
+                  disabled={!isNewPost}/>
+          </div>
 
-        <div className="form-row">
-          <label htmlFor="post_category">Category</label>
-          {categories &&
-          <select id="post_category"
-                  value={post.category}
-                  onChange={(e) => this.handleChange('category', e.target.value)} disabled={!isNewPost}
-          >
-            <option value="">-- Select category</option>
-            {categories.map(category => (
-              <option key={category.path} value={category.name}>
-                {category.name}
-              </option>))
-            }
-          </select>}
-        </div>
-        <div className="form-actions">
-          <button type="button" className="button" onClick={() => onSave(post)}>Save</button>
-          <button type="button" className="button" onClick={() => onCancel(post)}>Cancel</button>
-        </div>
-      </form>
+          <div className="form-row">
+            <label htmlFor="post_category">Category</label>
+            {categories &&
+            <select id="post_category"
+                    value={post.category}
+                    onChange={(e) => this.handleChange('category', e.target.value)} disabled={!isNewPost}
+            >
+              <option value="">-- Select category</option>
+              {categories.map(category => (
+                <option key={category.path} value={category.name}>
+                  {category.name}
+                </option>))
+              }
+            </select>}
+          </div>
+          <div className="form-actions">
+            <button type="button" className="button" onClick={() => onSave(post)}>Save</button>
+            <button type="button" className="button" onClick={() => onCancel(post)}>Cancel</button>
+          </div>
+        </form>
+      </main>
     )
   };
 }

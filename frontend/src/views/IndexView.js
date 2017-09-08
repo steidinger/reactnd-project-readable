@@ -9,8 +9,10 @@ const IndexView = ({activeCategory}) => (
   <div>
     <CategoriesMenu />
     <SortOrderSelector />
-    <Posts activeCategory={activeCategory} />
-    <Link className="button" to={`/post/add?category=${activeCategory ? activeCategory : ''}`}>Add New Post</Link>
+    <main>
+      <Posts activeCategory={activeCategory} />
+      <Link className="button" to={`/post/add?category=${activeCategory ? activeCategory : ''}`}>Add New Post</Link>
+    </main>
   </div>
 );
 
