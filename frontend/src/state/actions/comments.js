@@ -23,7 +23,6 @@ export function fetchComments(post) {
   return (dispatch) => {
     const path = `posts/${post.id}/comments`;
     doGet(path)
-      .then(response => response.json())
       .then(comments => dispatch(commentsReceived(comments)));
   };
 }
@@ -33,7 +32,6 @@ export function addVoteForComment(commentId, vote) {
     // optimistic update: reflect new state immediately
     dispatch(voteForCommentAdded(commentId, vote));
     doPost(`comments/${commentId}`, {option: vote > 0 ? 'upVote' : 'downVote'})
-      .then(response => response.json())
       .then(comment => dispatch(commentUpdated(comment)))
       .catch(e => {
         console.error(e);
@@ -48,7 +46,6 @@ export function addComment(comment) {
     comment.timestamp = moment().valueOf();
     dispatch(commentUpdated(comment));
     doPost('comments', comment)
-      .then(response => response.json())
       .then(json => dispatch(commentUpdated(json)))
       .catch(e => {
         console.error(e);
@@ -60,7 +57,6 @@ export function saveComment(comment) {
   return (dispatch) => {
     dispatch(commentUpdated(comment));
     doPut(`comments/${comment.id}`, {body: comment.body, timestamp: moment().valueOf()})
-      .then(response => response.json())
       .then(json => dispatch(commentUpdated(json)))
       .catch(e => {
         console.error(e);

@@ -1,14 +1,16 @@
 export function doGet(path) {
   return fetch(`http://localhost:5001/${path}`, {
     headers: {Authorization: 'faked'}
-  });
+  })
+    .then(response => response.json());
 }
 
 export function doDelete(path) {
   return fetch(`http://localhost:5001/${path}`, {
     method: 'DELETE',
     headers: {Authorization: 'faked'}
-  });
+  })
+    .then(response => response.json());
 }
 
 export function doPost(path, body) {
@@ -19,7 +21,8 @@ export function doPost(path, body) {
       Authorization: 'faked'
     },
     body: JSON.stringify(body)
-  });
+  })
+    .then(response => response.json());
 }
 
 export function doPut(path, body) {
@@ -30,5 +33,6 @@ export function doPut(path, body) {
       Authorization: 'faked'
     },
     body: JSON.stringify(body)
-  });
+  })
+    .then(response => response.json());
 }

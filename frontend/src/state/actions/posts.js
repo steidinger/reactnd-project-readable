@@ -28,7 +28,6 @@ export function fetchPosts() {
   return (dispatch) => {
     dispatch(postsRequested());
     doGet('posts')
-      .then(response => response.json())
       .then(posts => {
         dispatch(postsReceived(posts));
         // need to fetch comments for each post so that number of comments can be displayed
@@ -43,7 +42,6 @@ export function addVoteForPost(postId, vote) {
     // optimistic update: reflect new state immediately
     dispatch(voteForPostAdded(postId, vote));
     doPost(`posts/${postId}`, {option: vote > 0 ? 'upVote' : 'downVote'})
-      .then(response => response.json())
       .then(post => dispatch(postUpdated(post)))
       .catch(e => {
         console.error(e);
@@ -58,7 +56,6 @@ export function addPost(post) {
     post.timestamp = moment().valueOf();
     dispatch(postUpdated(post));
     doPost('posts', post)
-      .then(response => response.json())
       .then(json => dispatch(postUpdated(json)))
       .catch(e => {
         console.error(e);
@@ -71,7 +68,6 @@ export function savePost(post) {
   return (dispatch) => {
     dispatch(postUpdated(post));
     doPut(`posts/${post.id}`, {title: post.title, body: post.body})
-      .then(response => response.json())
       .then(json => dispatch(postUpdated(json)))
       .catch(e => {
         console.error(e);

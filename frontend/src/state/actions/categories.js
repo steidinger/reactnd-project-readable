@@ -6,7 +6,6 @@ export const categoriesReceived = categories => ({type: CATEGORIES_RECEIVED, cat
 export function fetchCategories() {
   return (dispatch) => {
     doGet('categories')
-      .then(response => response.json())
       .then(json => dispatch(categoriesReceived(json.categories)));
   };
 }
