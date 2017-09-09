@@ -8,7 +8,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default function createStore() {
   return createReduxStore(
     rootReducer,
-    {categories: []},
     composeEnhancers(applyMiddleware(thunk, logger))
   );
 }
