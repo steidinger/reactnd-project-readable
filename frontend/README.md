@@ -1,4 +1,4 @@
-This folder contains the frontend code for the Udacity project *Readable*. It was bootstrapped using [Create React App](https://github.com/facebookincubator/create-react-app). For general installation instructions please refer to the parent folder's [readme](../readme.md).
+This folder contains the frontend code for the Udacity project *Readable*. It was bootstrapped using [Create React App](https://github.com/facebookincubator/create-react-app). For general installation instructions please refer to the parent folder's [readme](../readme.md). The GUI intentionally uses only minimal styling so that I could concentrate on implementing the required functionality using React and Redux.
 
 ## Folder Structure
 
@@ -14,6 +14,10 @@ frontend/
     components/
     views/
     state/
+      actions/
+      reducers/
+      selectors.js
+      store.js
     App.css
     App.js
     App.test.js
