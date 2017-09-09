@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addPost, editPost, editPostFinished, formValidationFailed, savePost} from '../state/actions';
+import {addPost, editPost, editPostFinished, savePost} from '../state/actions/posts';
+import {formValidationFailed} from '../state/actions/forms';
 import FormValidationErrors from '../components/FormValidationErrors';
 
 class PostEditView extends React.Component {

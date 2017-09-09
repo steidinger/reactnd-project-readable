@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Root from './Root';
 import createStore from './state/store.js';
-import {fetchCategories, fetchPosts} from './state/actions.js';
+import {fetchCategories} from './state/actions/categories';
+import {fetchPosts} from './state/actions/posts';
 
 const store = createStore();
 store.dispatch(fetchCategories());

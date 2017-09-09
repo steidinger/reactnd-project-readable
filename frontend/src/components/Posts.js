@@ -4,7 +4,7 @@ import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 import {visiblePosts} from '../state/selectors';
-import {addVoteForPost, deletePost} from '../state/actions';
+import {addVoteForPost, deletePost} from '../state/actions/posts';
 import VoteControl from './VoteControl';
 
 import './Posts.css';

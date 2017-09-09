@@ -7,9 +7,9 @@ import {
   deleteComment,
   editComment,
   editCommentFinished,
-  saveComment,
-  formValidationFailed
-} from '../state/actions';
+  saveComment
+} from '../state/actions/comments';
+import {formValidationFailed} from '../state/actions/forms';
 import VoteControl from './VoteControl';
 import FormValidationErrors from './FormValidationErrors';
 

@@ -1,4 +1,4 @@
-import {CATEGORIES_RECEIVED} from '../actions';
+import {CATEGORIES_RECEIVED} from '../actions/types';
 
 export default function categories(state = [], action) {
   switch (action.type) {

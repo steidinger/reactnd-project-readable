@@ -2,7 +2,7 @@ import {
   COMMENTS_RECEIVED,
   COMMENT_DELETED,
   COMMENT_UPDATED
-} from '../actions';
+} from '../actions/types';
 
 export default function comments(state = {}, action) {
   switch (action.type) {

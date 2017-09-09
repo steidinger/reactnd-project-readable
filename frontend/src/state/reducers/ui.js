@@ -7,7 +7,7 @@ import {
   POSTS_RECEIVED,
   POSTS_REQUESTED,
   SORT_POSTS
-} from '../actions';
+} from '../actions/types';
 
 const defaultUiState = {
   sortField: 'voteScore',

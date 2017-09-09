@@ -3,7 +3,7 @@ import {
   POST_DELETED,
   POSTS_RECEIVED,
   POST_UPDATED
-} from '../actions';
+} from '../actions/types';
 
 export default function posts(state = {}, action) {
   switch (action.type) {
