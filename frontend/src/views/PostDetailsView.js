@@ -11,7 +11,7 @@ import './PostDetailsView.css';
 
 class PostDetailsView extends React.Component {
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.post && this.props.post.id) {
       this.props.dispatch(fetchComments(this.props.post));
     }
