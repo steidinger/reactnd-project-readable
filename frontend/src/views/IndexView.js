@@ -1,13 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import CategoriesMenu from '../components/CategoriesMenu';
 import Posts from '../components/Posts';
 import SortOrderSelector from '../components/SortOrderSelector';
 
 const IndexView = ({activeCategory}) => (
   <div>
-    <CategoriesMenu />
     <SortOrderSelector />
     <main>
       <Posts activeCategory={activeCategory} />
