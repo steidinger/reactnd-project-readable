@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import moment from 'moment';
 import {addVoteForPost, deletePost, fetchComments} from '../state/actions';
 import {visibleComments} from '../state/selectors';
@@ -25,10 +25,12 @@ class PostDetailsView extends React.Component {
   }
 
   render() {
-    if (!this.props.post) {
-      return <div className="post">Not found</div>;
+    if (!this.props.isLoading && !this.props.post) {
+      return <Redirect to="/" />;
     }
-
+    if (this.props.isLoading) {
+      return <div>Loading...</div>;
+    }
     const {
       post: {
         id,
@@ -64,10 +66,10 @@ class PostDetailsView extends React.Component {
   }
 }
 
-const mapStateToProps = (state, {match}) => {
-  const post = state.posts[match.params.post_id];
-  const comments = post ? visibleComments(state, post) : [];
-  return {post, comments};
+const mapStateToProps = ({posts, comments: allComments, postsApp: {isLoadingPosts: isLoading}}, {match}) => {
+  const post = posts[match.params.post_id];
+  const comments = post ? visibleComments(allComments, post) : [];
+  return {post, comments, isLoading};
 };
 
 const mapDispatchToProps = (dispatch, {history}) => ({

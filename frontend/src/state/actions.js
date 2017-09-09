@@ -3,6 +3,7 @@ import uuid from 'uuid';
 export const CATEGORIES_RECEIVED = 'CATEGORIES_RECEIVED';
 export const COMMENTS_RECEIVED = 'COMMENTS_RECEIVED';
 export const COMMENT_UPDATED = 'COMMENT_UPDATED';
+export const POSTS_REQUESTED = 'POSTS_REQUESTED';
 export const POSTS_RECEIVED = 'POSTS_RECEIVED';
 export const POST_UPDATED = 'POST_UPDATED';
 export const SORT_POSTS = 'SORT_POSTS';
@@ -20,6 +21,7 @@ export const COMMENT_DELETED = 'COMMENT_DELETED';
 export const FORM_VALIDATION_FAILED = 'FORM_VALIDATION_FAILED';
 
 const categoriesReceived = categories => ({type: CATEGORIES_RECEIVED, categories});
+const postsRequested = () => ({type: POSTS_REQUESTED});
 const postsReceived = posts => ({type: POSTS_RECEIVED, posts});
 const postUpdated = post => ({type: POST_UPDATED, post});
 const postDeleted = id => ({type: POST_DELETED, id});
@@ -79,6 +81,7 @@ export function fetchCategories() {
 
 export function fetchPosts() {
   return (dispatch) => {
+    dispatch(postsRequested());
     doGet('posts')
       .then(response => response.json())
       .then(posts => {

@@ -9,9 +9,9 @@ function byField(sortField, ascending = true) {
 }
 
 export const postById = ({posts, comments}, id) =>
-  Object.assign({}, posts[id], {comments: visibleComments({comments}, {id})});
+  Object.assign({}, posts[id], {comments: visibleComments(comments, {id})});
 
-export const visibleComments = ({comments}, {id}) =>
+export const visibleComments = (comments, {id}) =>
   Object.values(comments).filter(c => c.parentId === id).sort(byField('timestamp', false));
 
 export const visiblePosts = ({posts, comments, postsApp}, filterCategory) =>

@@ -12,6 +12,7 @@ import {
   FORM_VALIDATION_FAILED,
   POST_DELETED,
   POSTS_RECEIVED,
+  POSTS_REQUESTED,
   POST_UPDATED,
   SORT_POSTS
 } from './actions';
@@ -83,6 +84,7 @@ export function comments(state = {}, action) {
 const defaultUiState = {
   sortField: 'voteScore',
   sortAscending: false,
+  isLoadingPosts: false,
   currentlyEditedComment: undefined,
   currentlyEditedPost: undefined,
   formValidationErrors: undefined
@@ -90,6 +92,16 @@ const defaultUiState = {
 
 export function postsApp(state = defaultUiState, action) {
   switch (action.type) {
+  case POSTS_REQUESTED:
+    return {
+      ...state,
+      isLoadingPosts: true
+    };
+  case POSTS_RECEIVED:
+    return {
+      ...state,
+      isLoadingPosts: false
+    };
   case SORT_POSTS:
     return {
       ...state,
